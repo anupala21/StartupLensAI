@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+streamlit
+google-generativeai
+langchain
+langchain-community
+chromadb
+pymongo
+pandas
+numpy
+scikit-learn
+plotly
+python-dotenv
+requests
