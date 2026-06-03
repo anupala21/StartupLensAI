@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+from backend.agents.competitor_agent import (
+    CompetitorAgent
+)
 from backend.agents.idea_agent import (
     IdeaAgent
 )
@@ -35,3 +37,11 @@ def validate(request: IdeaRequest):
         return {
             "raw_response": result
         }
+@app.post("/competitors")
+def competitors(request: IdeaRequest):
+
+    result = CompetitorAgent.analyze(
+        request.idea
+    )
+
+    return result

@@ -11,6 +11,7 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 
 def analyze_startup_idea(idea):
+
     prompt = f"""
 Analyze this startup idea:
 
@@ -37,6 +38,44 @@ Return JSON only.
     response = model.generate_content(prompt)
 
     text = response.text
+
+    text = text.replace("```json", "")
+    text = text.replace("```", "")
+
+    return text.strip()
+
+# -----------------------------
+# NEW FUNCTION
+# -----------------------------
+
+def find_competitors(idea):
+
+    prompt = f"""
+    Analyze this startup idea:
+
+    {idea}
+
+    Return ONLY valid JSON:
+
+    {{
+        "competitors": [
+            "Competitor 1",
+            "Competitor 2",
+            "Competitor 3"
+        ],
+        "market_gap": "Gap in market",
+        "opportunity_level": "High"
+    }}
+
+    Return JSON only.
+    """
+
+    response = model.generate_content(prompt)
+
+    text = response.text
+
+    print("GEMINI RESPONSE:")
+    print(text)
 
     text = text.replace("```json", "")
     text = text.replace("```", "")

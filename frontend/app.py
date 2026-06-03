@@ -21,6 +21,11 @@ if st.button("Validate Idea"):
         col1, col2 = st.columns(2)
 
         with col1:
+            if "innovation_score" not in result:
+                st.error("Backend did not return expected JSON")
+                st.write(result)
+                st.stop()
+
             st.metric(
                 "Innovation Score",
                 f"{result['innovation_score']}/10"
@@ -37,10 +42,10 @@ if st.button("Validate Idea"):
                 result['competition_level']
             )
 
-            st.metric(
-                "Success Probability",
-                f"{result['success_probability']}%"
-            )
+        st.metric(
+            "Success Probability",
+            f"{result['success_probability']}%"
+        )
 
         st.progress(
             result["success_probability"] / 100
@@ -50,3 +55,34 @@ if st.button("Validate Idea"):
 
         for rec in result["recommendations"]:
             st.write("✅", rec)
+            st.divider()
+
+st.subheader("🏢 Competitor Analysis")
+
+if st.button("Find Competitors"):
+
+    with st.spinner("Finding competitors..."):
+
+        response = requests.post(
+            "http://127.0.0.1:8000/competitors",
+            json={"idea": idea}
+        )
+
+        result = response.json()
+
+        st.markdown("### Top Competitors")
+
+        for comp in result["competitors"]:
+            st.write("🏢", comp)
+
+        st.markdown("### Market Gap")
+
+        st.info(
+            result["market_gap"]
+        )
+
+        st.markdown("### Opportunity Level")
+
+        st.success(
+            result["opportunity_level"]
+        )
