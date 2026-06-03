@@ -18,14 +18,20 @@ def home():
         "message": "StartupLens AI Running"
     }
 
+import json
 
 @app.post("/validate")
 def validate(request: IdeaRequest):
 
-    result = IdeaAgent.validate(
-        request.idea
-    )
+    result = IdeaAgent.validate(request.idea)
 
-    return {
-        "analysis": result
-    }
+    try:
+        return json.loads(result)
+
+    except Exception as e:
+
+        print("JSON ERROR:", e)
+
+        return {
+            "raw_response": result
+        }

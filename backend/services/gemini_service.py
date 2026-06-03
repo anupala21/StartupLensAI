@@ -12,20 +12,33 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 def analyze_startup_idea(idea):
     prompt = f"""
-    Analyze this startup idea:
+Analyze this startup idea:
 
-    {idea}
+{idea}
 
-    Return:
-    1. Innovation Score (1-10)
-    2. Market Potential (1-10)
-    3. Competition Level
-    4. Success Probability (%)
-    5. Key Recommendations
+Return ONLY valid JSON in this format:
 
-    Format nicely.
-    """
+{{
+    "innovation_score": 8,
+    "market_potential": 9,
+    "competition_level": "Medium",
+    "success_probability": 75,
+    "recommendations": [
+        "Recommendation 1",
+        "Recommendation 2",
+        "Recommendation 3"
+    ]
+}}
 
+Do not include markdown.
+Do not include explanations.
+Return JSON only.
+"""
     response = model.generate_content(prompt)
 
-    return response.text
+    text = response.text
+
+    text = text.replace("```json", "")
+    text = text.replace("```", "")
+
+    return text.strip()
