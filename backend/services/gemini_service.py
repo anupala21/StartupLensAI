@@ -81,3 +81,65 @@ def find_competitors(idea):
     text = text.replace("```", "")
 
     return text.strip()
+def find_market_research(idea):
+
+    prompt = f"""
+    Analyze this startup idea:
+
+    {idea}
+
+    Return ONLY valid JSON:
+
+    {{
+        "tam": "$100 Billion",
+        "sam": "$10 Billion",
+        "som": "$500 Million",
+        "growth_rate": "15% CAGR",
+        "target_audience": [
+            "Audience 1",
+            "Audience 2",
+            "Audience 3"
+        ]
+    }}
+
+    Return JSON only.
+    """
+
+    response = model.generate_content(prompt)
+
+    text = response.text
+
+    text = text.replace("```json", "")
+    text = text.replace("```", "")
+
+    return text.strip()
+def generate_blueprint(idea):
+
+    prompt = f"""
+    Create a startup blueprint for:
+
+    {idea}
+
+    Return ONLY valid JSON:
+
+    {{
+        "executive_summary": "...",
+        "problem_statement": "...",
+        "solution": "...",
+        "target_audience": "...",
+        "revenue_model": "...",
+        "go_to_market_strategy": "...",
+        "funding_recommendation": "..."
+    }}
+
+    Return JSON only.
+    """
+
+    response = model.generate_content(prompt)
+
+    text = response.text
+
+    text = text.replace("```json", "")
+    text = text.replace("```", "")
+
+    return text.strip()
