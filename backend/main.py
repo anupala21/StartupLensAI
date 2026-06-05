@@ -38,7 +38,7 @@ def validate(request: IdeaRequest):
     except Exception as e:
 
         print("JSON ERROR:", e)
-
+        print(result)
         return {
             "raw_response": result
         }

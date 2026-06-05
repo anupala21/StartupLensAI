@@ -35,18 +35,29 @@ Do not include markdown.
 Do not include explanations.
 Return JSON only.
 """
-    response = model.generate_content(prompt)
+    try:    
+        response = model.generate_content(prompt)
+        text = response.text
+        text = text.replace("```json", "")
+        text = text.replace("```", "")
+        return text.strip()
+    except Exception as e:
 
-    text = response.text
+        print("GEMINI ERROR:", e)
 
-    text = text.replace("```json", "")
-    text = text.replace("```", "")
+        return """
+        {
+            "innovation_score": 0,
+            "market_potential": 0,
+            "competition_level": "Unknown",
+            "success_probability": 0,
+            "recommendations": [
+                "AI analysis temporarily unavailable."
+            ]
+        }
+        """
 
-    return text.strip()
-
-# -----------------------------
 # NEW FUNCTION
-# -----------------------------
 
 def find_competitors(idea):
 
@@ -69,18 +80,25 @@ def find_competitors(idea):
 
     Return JSON only.
     """
+    try:
+        response = model.generate_content(prompt)
+        text = response.text
+        print("GEMINI RESPONSE:")
+        print(text)
+        text = text.replace("```json", "")
+        text = text.replace("```", "")
+        return text.strip()
+    except Exception as e:
 
-    response = model.generate_content(prompt)
+        print("GEMINI ERROR:", e)
 
-    text = response.text
-
-    print("GEMINI RESPONSE:")
-    print(text)
-
-    text = text.replace("```json", "")
-    text = text.replace("```", "")
-
-    return text.strip()
+        return """
+        { 
+            "competitors": [],
+            "market_gap": "AI analysis temporarily unavailable.",
+            "opportunity_level": "Unknown"
+        }
+        """
 def find_market_research(idea):
 
     prompt = f"""
@@ -104,15 +122,27 @@ def find_market_research(idea):
 
     Return JSON only.
     """
+    try:
+        response = model.generate_content(prompt)
+        text = response.text
+        text = text.replace("```json", "")
+        text = text.replace("```", "")
+        return text.strip()
+    except Exception as e:
 
-    response = model.generate_content(prompt)
+        print("GEMINI ERROR:", e)
 
-    text = response.text
-
-    text = text.replace("```json", "")
-    text = text.replace("```", "")
-
-    return text.strip()
+        return """
+        {
+            "tam": "N/A",
+            "sam": "N/A",
+            "som": "N/A",
+            "growth_rate": "N/A",
+            "target_audience": [
+                 "AI analysis temporarily unavailable."
+             ]
+        }
+        """
 def generate_blueprint(idea):
 
     prompt = f"""
@@ -134,12 +164,24 @@ def generate_blueprint(idea):
 
     Return JSON only.
     """
+    try:
+        response = model.generate_content(prompt)
+        text = response.text
+        text = text.replace("```json", "")
+        text = text.replace("```", "")
+        return text.strip()
+    except Exception as e:
 
-    response = model.generate_content(prompt)
+        print("GEMINI ERROR:", e)
 
-    text = response.text
-
-    text = text.replace("```json", "")
-    text = text.replace("```", "")
-
-    return text.strip()
+        return """
+        {
+            "executive_summary": "AI analysis temporarily unavailable.",
+            "problem_statement": "Unavailable",
+            "solution": "Unavailable",
+            "target_audience": "Unavailable",
+            "revenue_model": "Unavailable",
+            "go_to_market_strategy": "Unavailable",
+            "funding_recommendation": "Unavailable"
+        }
+        """

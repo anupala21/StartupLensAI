@@ -10,9 +10,12 @@ st.set_page_config(
 st.title("🚀 StartupLens AI")
 
 idea = st.text_area(
-    "Enter Startup Idea"
+    "Enter Startup Idea",
+    placeholder="Example: AI platform that helps students transform academic projects into startups."
 )
-
+st.info(
+    "StartupLens AI uses Gemini API. Results depend on API availability."
+)
 tab1, tab2, tab3, tab4 = st.tabs([
     "📈 Validation",
     "🏢 Competitors Analysis",
